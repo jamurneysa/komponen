@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listin/Column.dart';
+import 'package:listin/wcolumn.dart';
 import 'home_controller.dart';
+
 class LListView extends StatefulWidget {
   const LListView({super.key});
 
@@ -20,7 +21,6 @@ class MyHomePage<T> extends StatelessWidget {
   final dynamic tabelKey;
   final String tabel;
   final String where;
-  final int dataCount;
   final String initialSort;
   final bool ascending;
   final List<String>? kolomDiCari;
@@ -29,10 +29,18 @@ class MyHomePage<T> extends StatelessWidget {
   final bool fullWidth;
 
   final HomeController controller = Get.put(HomeController());
-  
 
-  MyHomePage({super.key, this.tabelKey, });
-
+  MyHomePage({
+    super.key,
+    this.tabelKey,
+    this.tabel = '',
+    this.where = '',
+    this.initialSort = '',
+    this.ascending = true,
+    this.kolomDiCari,
+    this.onSelected,
+    this.fullWidth = true,
+  }) : column = [];
 
   @override
   Widget build(BuildContext context) {
