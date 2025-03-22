@@ -35,7 +35,8 @@ int? makeInt(dynamic d) {
 }
 
 double? makeDouble(d) => (double.tryParse(d.toString()));
-double? makeDouble2(d) => double.tryParse(d.toString().replaceAll(',', '.').replaceAll('.', '')) ?? 0;
+double? makeDouble2(d) =>
+    double.tryParse(d.toString().replaceAll(',', '.').replaceAll('.', '')) ?? 0;
 bool? makeBool(d) => ((d is bool) ? d : bool.tryParse(d.toString()) ?? false);
 bool isNumeric(String s) {
   if (s.isEmpty) {
@@ -59,14 +60,26 @@ setProses([String? s]) {
   dp(s);
 }
 
-final CurrencyTextInputFormatter uangformatter = CurrencyTextInputFormatter.currency(locale: 'id', decimalDigits: 0, symbol: 'Rp. ');
-final CurrencyTextInputFormatter angkaformatter = CurrencyTextInputFormatter.currency(locale: 'id', decimalDigits: 0, symbol: "");
+final CurrencyTextInputFormatter uangformatter =
+    CurrencyTextInputFormatter.currency(
+      locale: 'id',
+      decimalDigits: 0,
+      symbol: 'Rp. ',
+    );
+final CurrencyTextInputFormatter angkaformatter =
+    CurrencyTextInputFormatter.currency(
+      locale: 'id',
+      decimalDigits: 0,
+      symbol: "",
+    );
 formatangka(a) {
   double value = double.tryParse(a.toString().replaceAll(",", "")) ?? 0;
   return NumberFormat("#,##0.#", "id_ID").format(value);
 }
 
-formatuang(a) => uangformatter.formatDouble(double.tryParse(a.toString().replaceAll(",", "")) ?? 0);
+formatuang(a) => uangformatter.formatDouble(
+  double.tryParse(a.toString().replaceAll(",", "")) ?? 0,
+);
 
 String addWhere(String baseSql, String? whereCondition) {
   if (baseSql.isEmpty) {
@@ -79,7 +92,10 @@ String addWhere(String baseSql, String? whereCondition) {
     if (hasWhereClause) {
       dp('edit');
       dynamicQuery = dynamicQuery.replaceFirst('where', 'WHERE');
-      dynamicQuery = dynamicQuery.replaceFirst('WHERE', 'WHERE $whereCondition AND');
+      dynamicQuery = dynamicQuery.replaceFirst(
+        'WHERE',
+        'WHERE $whereCondition AND',
+      );
     } else {
       dp('baru');
       dynamicQuery += ' WHERE $whereCondition';
@@ -110,10 +126,14 @@ String createWhere(String source, List<String> fields) {
   // For each word, create a group of conditions
   for (var word in words) {
     // Escape special characters for SQL LIKE
-    String sanitizedWord = word.replaceAll("'", "''"); // Escape single quotes for SQL
+    String sanitizedWord = word.replaceAll(
+      "'",
+      "''",
+    ); // Escape single quotes for SQL
 
     // Create conditions for each field
-    var wordConditions = fields.map((field) => "LOWER($field) LIKE '%$sanitizedWord%'").toList();
+    var wordConditions =
+        fields.map((field) => "LOWER($field) LIKE '%$sanitizedWord%'").toList();
 
     // Join conditions for the current word with OR
     groups.add('(${wordConditions.join(' OR ')})');
@@ -132,7 +152,8 @@ String createWhereold(String source, List<String> fields) {
 
   // For each word, create a group of conditions
   for (var word in words) {
-    var wordConditions = fields.map((field) => "LOWER($field) LIKE '%$word%'").toList();
+    var wordConditions =
+        fields.map((field) => "LOWER($field) LIKE '%$word%'").toList();
     // Join conditions for the current word with OR
     groups.add('(${wordConditions.join(' OR ')})');
   }
@@ -186,7 +207,11 @@ String namaBulan(int? bln) {
   }
 }
 
-String? generateInsertQuery(String table, List<String> fields, List<Map<String, dynamic>> values) {
+String? generateInsertQuery(
+  String table,
+  List<String> fields,
+  List<Map<String, dynamic>> values,
+) {
   if (fields.isEmpty || values.isEmpty || table.isEmpty) {
     return null;
   }

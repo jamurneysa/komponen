@@ -3,21 +3,7 @@ import 'package:get/get.dart';
 import 'package:listin/wcolumn.dart';
 import 'home_controller.dart';
 
-class LListView extends StatefulWidget {
-  const LListView({super.key});
-
-  @override
-  State<LListView> createState() => _LListViewState();
-}
-
-class _LListViewState extends State<LListView> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
-
-class MyHomePage<T> extends StatelessWidget {
+class DbListView<T> extends StatelessWidget {
   final dynamic tabelKey;
   final String tabel;
   final String where;
@@ -30,7 +16,7 @@ class MyHomePage<T> extends StatelessWidget {
 
   final HomeController controller = Get.put(HomeController());
 
-  MyHomePage({
+  DbListView({
     super.key,
     this.tabelKey,
     this.tabel = '',
